@@ -64,7 +64,6 @@ else:
 
     for i, (root, dirs, filenames) in enumerate(os.walk(dir_path)):
         for name in filenames:
-
             if name.endswith('.webm') or name.endswith('.mp3') or name.endswith('.flac') or name.endswith('.wav'):
                 file_path = os.path.join(root, name)
                 print(file_path, i, file_path.split('\\')[-2])
@@ -233,7 +232,7 @@ probability_model = tf.keras.Sequential([
     tf.keras.layers.Softmax()
 ])
 
-test_file = 'skrillex scary.webm'
+test_file = 'aalto5.webm'
 sound = AudioSegment.from_file(test_file)
 sound = sound.set_channels(1)
 length_audio = len(sound)
@@ -263,7 +262,7 @@ mean = np.mean(test_mfccs, axis=0)
 std = np.std(test_mfccs, axis=0)
 test_mfccs = (test_mfccs - mean) / std
 
-class_names = ['ambient', 'classical', 'dubstep', 'hardstyle', 'jazz', 'trance']
+class_names = ['aboveandbeyond', 'other', 'drumandbass', 'trance']
 prob_results = []
 
 for i in range(len(test_mfccs)):
@@ -271,4 +270,4 @@ for i in range(len(test_mfccs)):
         test_mfccs[i:i + 1])  # because it needs to be a list in a list, [i,4410] just returns a 1d list
     answer = np.argmax(result[0])
     prob_results.append(answer)
-    print("Skrillex is a " + class_names[answer])
+    print("Test File is a " + class_names[answer])
