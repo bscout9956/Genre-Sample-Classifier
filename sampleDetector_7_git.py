@@ -16,14 +16,22 @@ import librosa.display
 #class_names = ["kick", "snare", "clap", "hihat"]
 class_names = ["aboveandbeyond", "trance", "drumandbass", "other"]
 
-train_path_list = ["train_kicks\\", "train_snares\\", "train_claps\\", "train_hats\\"]
-test_path_list = ["test_kicks\\", "test_snares\\", "test_claps\\", "test_hats\\"]
+train_path_list = ["train_{}".format(class_names[0]), "train_{}".format(class_names[1]), "train_{}".format(class_names[2]), "train_{}".format(class_names[3])]
+test_path_list = ["test_{}".format(class_names[0]),"test_{}".format(class_names[1]), "test_{}".format(class_names[2]), "test_{}".format(class_names[3])]
+
+# Get the names of the folders just in case
+
+for train_path in train_path_list:
+    print(train_path)
+
+for test_path in test_path_list:
+    print(test_path)
 
 # kek \/
 arr = []
-for a in train_path_list:
-    for i in os.listdir(a):
-        arr.append(a + i)
+for train_path in train_path_list:
+    for file in os.listdir(train_path):
+        arr.append(train_path + file)
 
 print(len(arr))
 
