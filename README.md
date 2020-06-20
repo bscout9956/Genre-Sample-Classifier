@@ -19,6 +19,8 @@ Numba
 
 CUDA 10.1
 
+ffmpeg added to pathprobe
+
 Videos that helped me:
 Neural Networks (Cool visuals): https://www.youtube.com/watch?v=bVQUSndDllU
 
