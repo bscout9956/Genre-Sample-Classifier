@@ -64,7 +64,7 @@ else:
 
     for i, (root, dirs, filenames) in enumerate(os.walk(dir_path)):
         for name in filenames:
-            if name.endswith('.webm') or name.endswith('.mp3') or name.endswith('.flac') or name.endswith('.wav'):
+            if name.endswith('.webm') or name.endswith('.mp3') or name.endswith('.flac') or name.endswith('.wav'): # bscout9956: add more formats ig
                 file_path = os.path.join(root, name)
                 print(file_path, i, file_path.split('\\')[-2])
                 sound = AudioSegment.from_file(file_path)
@@ -95,11 +95,15 @@ else:
                     mfcc = mfcc.T
                     # librosa.display.specshow(mfcc, sr=44100, hop_length=hop_length)
                     # plt.show()
+                    try:
+                        mfcc_features[mfcc_counter] = mfcc
+                        mfcc_labels.append(i - 1)
 
-                    mfcc_features[mfcc_counter] = mfcc
-                    mfcc_labels.append(i - 1)
-
-                    mfcc_counter += 1
+                        mfcc_counter += 1
+                    except:
+                        print("Something happened, make sure the files are 48khz.")
+                        print("MFCC is {}".format(mfcc))
+                        break # bscout9956: break out and go for another file                      
 
                 sound = None
 
@@ -249,7 +253,7 @@ for x in range(number_mfccs):
     samples = samples.astype(float)
     mfcc = librosa.feature.mfcc(samples, n_fft=n_fft, hop_length=hop_length, n_mfcc=13)
     mfcc = mfcc.T
-    # librosa.display.specshow(mfcc, sr=44100, hop_length=hop_length)
+    # librosa.display.specshow(mfcc, sr=44100, hop_length=hop_length) # bscout9956: I see, now you need 48khz for some reason??
     # plt.show()
     test_mfccs[x] = mfcc
 
@@ -270,4 +274,4 @@ for i in range(len(test_mfccs)):
         test_mfccs[i:i + 1])  # because it needs to be a list in a list, [i,4410] just returns a 1d list
     answer = np.argmax(result[0])
     prob_results.append(answer)
-    print("Test File is a " + class_names[answer])
+    print("Test File is a " + class_names[answer]) #bscout9956: why loop the print?
