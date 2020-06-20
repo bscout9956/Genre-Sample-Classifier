@@ -14,7 +14,8 @@ Tensorflow
 
 Matplotlib
 
-
+Numba
+ - Use pip install numba==0.48
 
 
 Videos that helped me:
