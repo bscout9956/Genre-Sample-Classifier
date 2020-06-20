@@ -11,14 +11,14 @@ import matplotlib.pyplot as plt
 import librosa.display
 
 printFunctools = functools.partial(print, flush=True)
-#class_names = ["kick", "snare", "clap", "hihat"]
+# class_names = ["kick", "snare", "clap", "hihat"]
 print("Defining class names...")
 class_names = ["aboveandbeyond", "trance", "drumandbass", "other"]
 
-train_path_list = ["train_{}".format(class_names[0]), "train_{}".format(class_names[1]),
-                   "train_{}".format(class_names[2]), "train_{}".format(class_names[3])]
-test_path_list = ["test_{}".format(class_names[0]), "test_{}".format(class_names[1]),
-                  "test_{}".format(class_names[2]), "test_{}".format(class_names[3])]
+train_path_list = ["train_{}\\".format(class_names[0]), "train_{}\\".format(class_names[1]),
+                   "train_{}\\".format(class_names[2]), "train_{}\\".format(class_names[3])]
+test_path_list = ["test_{}\\".format(class_names[0]), "test_{}\\".format(class_names[1]),
+                  "test_{}\\".format(class_names[2]), "test_{}\\".format(class_names[3])]
 
 # Get the names of the folders just in case
 
@@ -143,9 +143,9 @@ np.random.seed()
 
 # new test/validation samples
 arr = []
-for a in test_path_list:
-    for i in os.listdir(a):
-        arr.append(a + i)
+for test_path in test_path_list:
+    for file in os.listdir(test_path):
+        arr.append(test_path + file)
 
 test_sample_list = []
 test_np_mfcc = np.empty((len(arr), 9, 13))
@@ -153,6 +153,7 @@ test_np_mfcc = np.empty((len(arr), 9, 13))
 for i in range(len(arr)):
 
     # cant figure out how to play 32bit file
+    print(arr[i])
     sound = AudioSegment.from_file(arr[i], format="wav", channels=1)
     sound = sound.set_channels(1)
 
@@ -181,6 +182,8 @@ for i in range(len(arr)):
     mfcc = mfcc.T
 
     mfcc = np.expand_dims(mfcc, axis=0)
+    for x in mfcc:
+        print(len(x))
     test_np_mfcc[i] = mfcc
 
 test_sample_list = np.array(test_sample_list)
@@ -201,6 +204,9 @@ np.random.seed()
 train_size = int(amount_entries * 0.9)
 val_size = amount_entries - train_size
 
+print("train_size", train_size)
+print("val_size", val_size)
+
 training_ds = tf.data.Dataset.from_tensor_slices((np_mfcc, sample_list))
 # dataset = training_ds.shuffle(train_size + val_size)
 
@@ -208,7 +214,9 @@ training_ds = tf.data.Dataset.from_tensor_slices((np_mfcc, sample_list))
 val_ds = training_ds.skip(train_size).take(val_size)
 training_ds = training_ds.take(train_size)
 
+print("VAL:")
 printFunctools(val_ds)
+print("TRAIN:")
 printFunctools(training_ds)
 
 # ------------- build model ------------- #
