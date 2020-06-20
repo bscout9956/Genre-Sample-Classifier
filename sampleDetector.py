@@ -6,8 +6,9 @@ import numpy as np
 import tensorflow as tf
 from pydub import AudioSegment
 from tensorflow.keras import regularizers
+import functools
 
-print = np.functools.partial(print, flush=True)
+print = functools.partial(print, flush=True)
 import matplotlib.pyplot as plt
 from numpy import save
 from numpy import load
