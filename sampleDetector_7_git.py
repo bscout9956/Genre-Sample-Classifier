@@ -13,11 +13,13 @@ from numpy import save
 from numpy import load
 import librosa.display
 
-class_names = ["kick", "snare", "clap", "hihat"]
+#class_names = ["kick", "snare", "clap", "hihat"]
+class_names = ["aboveandbeyond", "trance", "drumandbass", "other"]
 
 train_path_list = ["train_kicks\\", "train_snares\\", "train_claps\\", "train_hats\\"]
 test_path_list = ["test_kicks\\", "test_snares\\", "test_claps\\", "test_hats\\"]
 
+# kek \/
 arr = []
 for a in train_path_list:
     for i in os.listdir(a):
@@ -76,7 +78,7 @@ if 'np_mfcc.npy' in os.listdir():
 else:
     for i in range(len(arr)):  # create mfcc
 
-        # cant figure out how to play 32bit file
+        # Dylan: cant figure out how to play 32bit file
         # bscout9956: hahahah
         sound = AudioSegment.from_file(arr[i], format="wav", channels=1)
         sound = sound.set_channels(1)
@@ -85,12 +87,12 @@ else:
         augmentor(sound, aug)
 
         for x in range(len(pitched_sounds)):
-
-            if re.search("kicks", arr[i]):
+            # bscout9956: Why hardcode this Dylan? /s
+            if re.search(class_names[0], arr[i]):
                 sample_list.append(0)
-            elif re.search("snares", arr[i]):
+            elif re.search(class_names[1], arr[i]):
                 sample_list.append(1)
-            elif re.search("clap", arr[i]):
+            elif re.search(class_names[2], arr[i]):
                 sample_list.append(2)
             else:
                 sample_list.append(3)
@@ -148,11 +150,12 @@ for i in range(len(arr)):
     sound = sound[:sample_length]
     samples = sound.get_array_of_samples()
 
-    if re.search("kicks", arr[i]):
+    # WHY
+    if re.search(class_names[0], arr[i]):
         test_sample_list.append(0)
-    elif re.search("snares", arr[i]):
+    elif re.search(class_names[1], arr[i]):
         test_sample_list.append(1)
-    elif re.search("claps", arr[i]):
+    elif re.search(class_names[2], arr[i]):
         test_sample_list.append(2)
     else:
         test_sample_list.append(3)
