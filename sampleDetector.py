@@ -1,24 +1,25 @@
 import os
-from pydub import AudioSegment
 import re
-
 import numpy as np
-import tensorflow as tf
-from pydub import AudioSegment
-from tensorflow.keras import regularizers
-import functools
-
-print = functools.partial(print, flush=True)
-import matplotlib.pyplot as plt
 from numpy import save
 from numpy import load
+import tensorflow as tf
+from tensorflow.keras import regularizers
+from pydub import AudioSegment
+import functools
+import matplotlib.pyplot as plt
 import librosa.display
 
+
+printFunctools = functools.partial(print, flush=True)
 #class_names = ["kick", "snare", "clap", "hihat"]
+print("Defining class names...")
 class_names = ["aboveandbeyond", "trance", "drumandbass", "other"]
 
-train_path_list = ["train_{}".format(class_names[0]), "train_{}".format(class_names[1]), "train_{}".format(class_names[2]), "train_{}".format(class_names[3])]
-test_path_list = ["test_{}".format(class_names[0]),"test_{}".format(class_names[1]), "test_{}".format(class_names[2]), "test_{}".format(class_names[3])]
+train_path_list = ["train_{}".format(class_names[0]), "train_{}".format(class_names[1]),
+                   "train_{}".format(class_names[2]), "train_{}".format(class_names[3])]
+test_path_list = ["test_{}".format(class_names[0]),"test_{}".format(class_names[1]),
+                  "test_{}".format(class_names[2]), "test_{}".format(class_names[3])]
 
 # Get the names of the folders just in case
 
@@ -34,7 +35,7 @@ for train_path in train_path_list:
     for file in os.listdir(train_path):
         arr.append(train_path + file)
 
-print(len(arr))
+printFunctools(len(arr))
 
 sample_list = []
 
@@ -51,7 +52,7 @@ def pitchSample(octaves, snd):
 
 def bassBoostSample(cutoff, snd):
     # no actually parametric eq so I layer a lp over
-    print("cutoff: ", cutoff * 10)
+    printFunctools("cutoff: ", cutoff * 10)
     low_passed = AudioSegment.low_pass_filter(snd, (cutoff * 10) + 100)
     augmented_sound = snd + low_passed
     return augmented_sound
@@ -81,7 +82,7 @@ np_mfcc = np.empty((amount_entries, 9, 13))
 
 # if you already have mfcc's saved it will just load them / if you want to create new ones delete them from the file
 if 'np_mfcc.npy' in os.listdir():
-    print('loading saved data')
+    printFunctools('loading saved data')
     np_mfcc = load('np_mfcc.npy')
     sample_list = load('sample_list.npy')
 else:
@@ -125,7 +126,7 @@ else:
             np_mfcc[i * aug + x] = mfcc
 
         if i % 100 == 0:
-            print(np.floor((i * 100) / len(arr)))
+            printFunctools(np.floor((i * 100) / len(arr)))
     save('np_mfcc.npy', np_mfcc)
     sample_list = np.array(sample_list)
     save('sample_list.npy', sample_list)
@@ -208,8 +209,8 @@ training_ds = tf.data.Dataset.from_tensor_slices((np_mfcc, sample_list))
 val_ds = training_ds.skip(train_size).take(val_size)
 training_ds = training_ds.take(train_size)
 
-print(val_ds)
-print(training_ds)
+printFunctools(val_ds)
+printFunctools(training_ds)
 
 # ------------- build model ------------- #
 
@@ -315,7 +316,7 @@ for i in range(len(test_np_mfcc)):
     result = probability_model(
         test_np_mfcc[i:i + 1])  # because it needs to be a list in a list, [i,4410] just returns a 1d list
     answer = np.argmax(result[0])
-    print(arr[i] + " is a " + class_names[answer])
+    printFunctools(arr[i] + " is a " + class_names[answer])
 
 
 def plot_image(i, predictions_array, true_label, img):
