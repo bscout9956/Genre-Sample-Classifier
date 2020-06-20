@@ -17,6 +17,7 @@ Matplotlib
 Numba
  - Use pip install numba==0.48
 
+CUDA 10.1
 
 Videos that helped me:
 Neural Networks (Cool visuals): https://www.youtube.com/watch?v=bVQUSndDllU
