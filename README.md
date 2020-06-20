@@ -27,3 +27,7 @@ Neural Networks (Cool visuals): https://www.youtube.com/watch?v=bVQUSndDllU
 Giant neural network (Maths basically): https://www.youtube.com/watch?v=ZzWaow1Rvho&list=PLxt59R_fWVzT9bDxA76AHm3ig0Gg9S3So
 
 Sound of AI (Genre Classification and NN basics! I recommend a lot!): https://www.youtube.com/watch?v=fMqL5vckiU0&list=PL-wATfeyAMNrtbkCNsLcpoAyBBRJZVlnf
+
+Tips:
+
+If you are having issues with an epoch.logs error or anything of the kind delete the npy files. :)
