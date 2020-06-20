@@ -1,2 +1,9 @@
 .idea
 venv/*
+genre_classifier/*/*.wav
+genre_classifier/*/*.flac
+genre_classifier/*/*.ogg
+genre_classifier/*/*.mp3
+genre_classifier/*/*.bat
+genre_classifier/*/*.pkf
+genre_classifier/*/*.xmp
