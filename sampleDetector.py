@@ -10,7 +10,6 @@ import functools
 import matplotlib.pyplot as plt
 import librosa.display
 
-
 printFunctools = functools.partial(print, flush=True)
 #class_names = ["kick", "snare", "clap", "hihat"]
 print("Defining class names...")
@@ -18,7 +17,7 @@ class_names = ["aboveandbeyond", "trance", "drumandbass", "other"]
 
 train_path_list = ["train_{}".format(class_names[0]), "train_{}".format(class_names[1]),
                    "train_{}".format(class_names[2]), "train_{}".format(class_names[3])]
-test_path_list = ["test_{}".format(class_names[0]),"test_{}".format(class_names[1]),
+test_path_list = ["test_{}".format(class_names[0]), "test_{}".format(class_names[1]),
                   "test_{}".format(class_names[2]), "test_{}".format(class_names[3])]
 
 # Get the names of the folders just in case
