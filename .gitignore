@@ -8,3 +8,4 @@ genre_classifier/*/*.bat
 genre_classifier/*/*.pkf
 genre_classifier/*/*.xmp
 genre_classifier/*/*.webm
+genre_classifier/*.webm
