@@ -164,7 +164,7 @@ def get_callbacks():
     return [
         tf.keras.callbacks.EarlyStopping(monitor='val_accuracy', patience=10),
         # this will stop the training if there is no improvement since the last 10 epochs
-        # tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path, verbose=1, save_weights_only=True, period=1)
+        tf.keras.callbacks.ModelCheckpoint(filepath=checkpoint_path, verbose=1, save_weights_only=True, period=1)
         # #uncomment if you want to save ur weights during training
     ]
 
